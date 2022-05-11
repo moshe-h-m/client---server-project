@@ -20,6 +20,7 @@ int main(int argc,char* argv[]){
         struct sockaddr_in serv_addr;
         struct hostent *server;
         char buffer[N];
+	char wrib[N];
 
         if(argc<3){
                 fprintf(stderr,"usage %s hostname port\n",argv[0]);
@@ -43,14 +44,21 @@ int main(int argc,char* argv[]){
 	printf("___ ___\n");
         if(connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr))<0)
                 gerror("ERROR: invalid connecting (connect)");
-	printf("___3___\n");
-        if(n=write(sockfd,"HELLO THERE",sizeof("HELLO THERE"))<=0)
-                gerror("ERROR: inaccessible to writing to sogket");
-	printf("___4___\n");
+//	printf("___3___\n");
+//	printf("___4___\n");
+        bzero(wrib,N);
+	printf("prees q to exit");
+	while(*wrib!='q'){
         bzero(buffer,N);
+	bzero(wrib,N);
         if((n=read(sockfd,buffer,N-1))<0)
                 gerror("ERROR: in reading from socket");
-        printf("message: %s\n",buffer);
+        
+	printf("host M H: %s\n",buffer);
+	scanf("I :%s\n",wrib);
+        if(n=write(sockfd,wrib,N-1)<=0)
+                gerror("ERROR: inaccessible to writing to sogket");
+	}
 	close(sockfd);
 	printf("by by \n");
 

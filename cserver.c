@@ -21,12 +21,14 @@ int main(int argc,char* argv[]){
         struct sockaddr_in serv_addr, cli_addr;
         char buffer[N+1];
         int n;
+	char name[N];
+	char writ[N];
 
         if(argc<2){
                 fprintf(stderr,"ERROR: no port provided\n");
                 exit(1);
         }
-	printf("\t ~~~this is a server program~~~\n");
+	printf("\t ~~~walcome to moshe haim chat room~~~\n");
         if((sockfd=socket(PF_INET,SOCK_STREAM,0))<0)
                 gerror("ERROR: no socket is opening");
 
@@ -41,21 +43,28 @@ int main(int argc,char* argv[]){
 
         if(listen(sockfd,100)<0)
                 gerror("ERROR: can't listening");
-	printf("whaiting to client.....\n");
+	printf("whaiting to conecter.....\n");
         clilengh=sizeof(cli_addr);
         if((newsockfd=accept(sockfd,(struct sockaddr*) &cli_addr,&clilengh))<0)
                 gerror("ERROR: no returned new socket descriptor");
-	printf("%d is recived\n",newsockfd);
+	printf("%d is conecting (:\n",newsockfd);
+	write(newsockfd,"\t walcome !!  \n plase enter your name:\n",40); 
         bzero(buffer,N);
+        read(newsockfd,buffer,N-1);
+	*name=*buffer;
+	while(*buffer!='q'){
 	//n=read(newsockfd,*buffer,N-1);
+	
         if((n=read(newsockfd,buffer,N-1))<0)
                 gerror("ERROR: no accesible to reading to socket");
 	printf("_\n");
-        printf("the message is: %s\n",buffer);
-
-        if((n=write(newsockfd,"I got your message",24))<0)
+        printf("%s: %s\n",name,buffer);
+        scanf("you : %s\n",writ);
+        if((n=write(newsockfd,writ,N-1))<0)
                 gerror("ERROR: no accesible to writing to socket");
-	
+	bzero(buffer,N);
+	bzero(writ,N);
+	}
 	close(sockfd);
 	printf("service stoped\n");
 	return 0;
