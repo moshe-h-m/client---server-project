@@ -21,7 +21,7 @@ int main(int argc,char* argv[]){
         struct sockaddr_in serv_addr, cli_addr;
         char buffer[N+1];
         int n;
-	char name[N];
+	//char name[N];
 	char writ[N];
 
         if(argc<2){
@@ -48,10 +48,12 @@ int main(int argc,char* argv[]){
         if((newsockfd=accept(sockfd,(struct sockaddr*) &cli_addr,&clilengh))<0)
                 gerror("ERROR: no returned new socket descriptor");
 	printf("%d is conecting (:\n",newsockfd);
-	write(newsockfd,"\t walcome !!  \n plase enter your name:\n",40); 
+	write(newsockfd,"walcome !!  plase enter your name: ",40); 
         bzero(buffer,N);
-        read(newsockfd,buffer,N-1);
-	*name=*buffer;
+        n=read(newsockfd,buffer,N-1);
+	char *name=malloc(n+1);
+	strcpy(name,buffer);
+	printf("\ni am %s\n",buffer);
 	while(*buffer!='q'){
 	//n=read(newsockfd,*buffer,N-1);
 	

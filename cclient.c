@@ -47,16 +47,17 @@ int main(int argc,char* argv[]){
 //	printf("___3___\n");
 //	printf("___4___\n");
         bzero(wrib,N);
-	printf("prees q to exit");
-	while(*wrib!='q'){
-        bzero(buffer,N);
-	bzero(wrib,N);
+	printf("prees q to exit\n");
+	while(*buffer!='q'){
+        //bzero(buffer,N);
+	bzero(buffer,N);
         if((n=read(sockfd,buffer,N-1))<0)
-                gerror("ERROR: in reading from socket");
+                 gerror("ERROR: in reading from socket");
         
-	printf("host M H: %s\n",buffer);
-	scanf("I :%s\n",wrib);
-        if(n=write(sockfd,wrib,N-1)<=0)
+	printf("host M H: %s",buffer);
+	scanf("%s",buffer);
+	printf("%s",buffer);
+        if(n=write(sockfd,buffer,N-1)<=0)
                 gerror("ERROR: inaccessible to writing to sogket");
 	}
 	close(sockfd);
